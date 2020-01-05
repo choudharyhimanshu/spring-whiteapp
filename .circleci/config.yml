@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build --build-arg "PACKAGE_NAME=spring-whiteapp" --build-arg "PACKAGE_VERSION=0.1.0" --build-arg "SPRING_PROFILE=prod" -t "$CIRCLE_PROJECT_REPONAME_$CIRCLE_BRANCH:$CIRCLE_BUILD_NUM" .
+  test:
+    docker:
+      - image: maven:3.6.2-jdk-8
+    working_directory: ~/repo
+    environment:
+      MAVEN_OPTS: -Xmx500m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+      - run: mvn test
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
+      - test

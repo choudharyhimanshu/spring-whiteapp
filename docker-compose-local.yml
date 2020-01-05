@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+      args:
+        - "PACKAGE_NAME=spring-whiteapp"
+        - "PACKAGE_VERSION=0.1.0"
+        - "SPRING_PROFILE=prod"
+    links:
+      - postgres
+    environment:
+      PORT: "8080"
+      DATABASE_URL: "postgres://postgres:foobar@postgres:5432/postgres"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./maven-repo:/root/.m2"
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: foobar
+    ports:
+      - "5432:5432"

@@ -1,0 +1,10 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+build:
+  docker:
+    web: Dockerfile
+  config:
+    PACKAGE_NAME:spring-whiteapp
+    PACKAGE_VERSION: 0.1.0
+    SPRING_PROFILE: prod

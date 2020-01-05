@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: foobar
+  jpa:
+    hibernate:
+      ddl-auto: update
+    databasePlatform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false

@@ -1,0 +1,17 @@
+server:
+  port: &&port&&
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://&&dbhost&&:&&dbport&&/&&dbname&&
+    username: &&dbusername&&
+    password: &&dbpassword&&
+  jpa:
+    hibernate:
+      ddl-auto: update
+    databasePlatform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
